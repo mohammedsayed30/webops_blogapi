@@ -1,11 +1,6 @@
 # app/lib/json_web_token.rb
 class JsonWebToken
-  SECRET_KEY = if Rails.env.test?
-                              "virtualsecretkey"
-  else
-                             Rails.application.credentials.secret_key_base
-  end
-
+  SECRET_KEY = Rails.application.credentials.secret_key_base
   def self.encode(payload, exp = 48.hours.from_now)
     payload[:exp] = exp.to_i
     JWT.encode(payload, SECRET_KEY)
