@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e
+
+# Enable jemalloc for reduced memory usage and latency
+if [ -z "${LD_PRELOAD}" ]; then
+    LD_PRELOAD=$(find /usr/lib -name 'libjemalloc.so*' -print -quit)
+    [ -n "$LD_PRELOAD" ] && export LD_PRELOAD
+fi
+
+# Check if we're running the rails server
+if [[ "$*" == *"./bin/rails server"* ]]; then
+    echo "== Preparing database..."
+    ./bin/rails db:prepare || echo "== Database preparation failed, continuing..."
+    
+    echo "== Running database migrations..."
+    ./bin/rails db:migrate || { echo "== Migration failed"; exit 1; }
+    
+    echo "== Database is ready!"
+fi
+
+exec "$@"
+
+
+
+
+
+
+
+
+
+# #!/bin/bash -e
+
+# # Enable jemalloc for reduced memory usage and latency.
+# if [ -z "${LD_PRELOAD+x}" ]; then
+#     LD_PRELOAD=$(find /usr/lib -name libjemalloc.so.2 -print -quit)
+#     export LD_PRELOAD
+# fi
+
+# # If running the rails server then create or migrate existing database
+# if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+#   ./bin/rails db:prepare
+#   ./bin/rails db:migrate
+# fi
+
+# exec "${@}"
