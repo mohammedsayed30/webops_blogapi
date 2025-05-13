@@ -14,7 +14,7 @@ let!(:tag) { Tag.create!(name: "test-tag") }
 
 let(:headers) do
   {
-    "Authorization" => "Bearer #{JWT.encode({ user_id: user.id }, "virtualsecretkey") }"
+    "Authorization" => "Bearer #{JWT.encode({ user_id: user.id }, Rails.application.credentials.secret_key_base) }"
   }
 end
 
