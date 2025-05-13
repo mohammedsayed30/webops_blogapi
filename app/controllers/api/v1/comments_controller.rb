@@ -23,8 +23,12 @@ class Api::V1::CommentsController < ApplicationController
   def index
     post = Post.find(params[:post_id])
     comments = post.comments.page(params[:page]).per(15)  # Kaminari pagination
-
-    render json: comments, status: :ok
+    #check if the comment is empty
+    if comments.empty?
+      render json: { message: "No comments found" }, status: :ok
+    else
+      render json: comments, status: :ok
+    end
   end
 
   # #update a comment
