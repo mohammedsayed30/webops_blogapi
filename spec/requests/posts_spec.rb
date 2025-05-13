@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Posts API", type: :request do
   let(:user) { User.create!(name: "Test", email: "test@example.com", password: "password", password_confirmation: "password") }
-  let(:headers) { { "Authorization" => "Bearer #{JWT.encode({ user_id: user.id }, Rails.application.credentials.secret_key_base) }" } }
+  let(:headers) { { "Authorization" => "Bearer #{JWT.encode({ user_id: user.id }, "virtualsecretkey") }" } }
   let!(:tag1) { Tag.create!(name: "Tag1") }
   let!(:tag2) { Tag.create!(name: "Tag2") }
   let!(:post_record) { Post.create!(title: "Sample Post", body: "Sample Body", user: user, tags: [ tag1 ]) }
