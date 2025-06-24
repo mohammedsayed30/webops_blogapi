@@ -10,7 +10,7 @@ gem "puma", ">= 5.0"
 # gem "jbuilder"
 
 # For token-based authentication
-gem "jwt", "~> 2.7"
+gem "jwt", "~> 3.1"
 # For JSON serialization
 gem "active_model_serializers", "~> 0.10.13"
 gem "active_storage_validations"
